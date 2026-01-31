@@ -1,0 +1,713 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ravelle — Private Members Marketplace</title>
+    <meta
+      name="description"
+      content="Ravelle is a private, members-only marketplace connecting verified clients with independent companions."
+    />
+
+    <style>
+      :root {
+        --bg: #07070a;
+        --panel: rgba(255, 255, 255, 0.06);
+        --panel2: rgba(255, 255, 255, 0.09);
+        --text: rgba(255, 255, 255, 0.92);
+        --muted: rgba(255, 255, 255, 0.65);
+        --line: rgba(255, 255, 255, 0.12);
+        --accent: #b30d2f;
+        --accent2: #ff2b58;
+        --radius: 18px;
+        --shadow: 0 20px 60px rgba(0, 0, 0, 0.55);
+        --max: 1120px;
+        --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        height: 100%;
+      }
+
+      body {
+        margin: 0;
+        background: radial-gradient(1200px 700px at 60% 10%, rgba(179, 13, 47, 0.22), transparent 60%),
+          radial-gradient(900px 600px at 25% 20%, rgba(255, 43, 88, 0.12), transparent 55%), var(--bg);
+        color: var(--text);
+        font-family: var(--font);
+      }
+
+      a {
+        color: var(--text);
+        text-decoration: none;
+      }
+      a:hover {
+        color: white;
+      }
+
+      .nav {
+        position: sticky;
+        top: 0;
+        backdrop-filter: blur(14px);
+        background: rgba(7, 7, 10, 0.75);
+        border-bottom: 1px solid var(--line);
+        z-index: 50;
+      }
+
+      .nav__inner {
+        max-width: var(--max);
+        margin: 0 auto;
+        padding: 14px 18px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 14px;
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        user-select: none;
+      }
+
+      .brand__mark {
+        width: 14px;
+        height: 14px;
+        border-radius: 999px;
+        background: linear-gradient(135deg, var(--accent), var(--accent2));
+        box-shadow: 0 0 24px rgba(255, 43, 88, 0.35);
+      }
+
+      .brand__name {
+        font-weight: 800;
+        letter-spacing: 0.5px;
+        text-transform: lowercase;
+      }
+
+      .nav__links {
+        display: none;
+        gap: 16px;
+        color: var(--muted);
+      }
+
+      .nav__links a {
+        color: var(--muted);
+        font-size: 14px;
+      }
+
+      .nav__links a:hover {
+        color: white;
+      }
+
+      .nav__actions {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+      }
+
+      .btn {
+        border: 1px solid var(--line);
+        background: transparent;
+        color: var(--text);
+        border-radius: 999px;
+        padding: 10px 14px;
+        font-size: 14px;
+        cursor: pointer;
+        transition: transform 0.15s ease, border-color 0.15s ease, background 0.15s ease, opacity 0.15s ease;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        white-space: nowrap;
+      }
+
+      .btn:hover {
+        transform: translateY(-1px);
+        border-color: rgba(255, 255, 255, 0.22);
+      }
+
+      .btn:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        transform: none;
+      }
+
+      .btn--primary {
+        background: linear-gradient(135deg, var(--accent), var(--accent2));
+        border-color: transparent;
+      }
+
+      .btn--ghost {
+        background: rgba(255, 255, 255, 0.03);
+      }
+
+      .btn--lg {
+        padding: 12px 18px;
+        font-size: 15px;
+      }
+
+      .hero {
+        padding: 56px 0 18px;
+      }
+
+      .hero__inner {
+        max-width: var(--max);
+        margin: 0 auto;
+        padding: 0 18px;
+        display: grid;
+        gap: 26px;
+        grid-template-columns: 1.15fr 0.85fr;
+        align-items: center;
+      }
+
+      .pill {
+        display: inline-flex;
+        gap: 10px;
+        padding: 8px 12px;
+        border-radius: 999px;
+        border: 1px solid var(--line);
+        background: rgba(255, 255, 255, 0.03);
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      h1 {
+        margin: 14px 0 12px;
+        font-size: 44px;
+        line-height: 1.05;
+        letter-spacing: -0.6px;
+      }
+
+      .sub {
+        margin: 0 0 18px;
+        color: var(--muted);
+        font-size: 16px;
+        line-height: 1.6;
+        max-width: 56ch;
+      }
+
+      .cta {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+        margin-top: 10px;
+      }
+
+      .trust {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+        margin-top: 18px;
+      }
+
+      .trust__item {
+        border: 1px solid var(--line);
+        background: rgba(255, 255, 255, 0.03);
+        border-radius: var(--radius);
+        padding: 12px;
+      }
+
+      .trust__kpi {
+        font-weight: 900;
+        text-transform: lowercase;
+        letter-spacing: 0.2px;
+      }
+
+      .trust__label {
+        color: var(--muted);
+        font-size: 13px;
+        margin-top: 4px;
+      }
+
+      .hero__panel {
+        position: relative;
+        min-height: 360px;
+      }
+
+      .card {
+        border-radius: calc(var(--radius) + 8px);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        background: rgba(0, 0, 0, 0.35);
+        box-shadow: var(--shadow);
+        overflow: hidden;
+        transform: translateY(6px);
+      }
+
+      .card__top {
+        display: flex;
+        gap: 7px;
+        padding: 12px;
+        border-bottom: 1px solid var(--line);
+        background: rgba(255, 255, 255, 0.02);
+      }
+
+      .dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.1);
+      }
+
+      .card__body {
+        padding: 18px;
+      }
+
+      .mock__title {
+        font-weight: 900;
+        margin-bottom: 14px;
+        letter-spacing: 0.2px;
+        text-transform: lowercase;
+      }
+
+      .mock__row {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 10px;
+      }
+
+      .mock__badge {
+        font-size: 12px;
+        padding: 6px 10px;
+        border-radius: 999px;
+        border: 1px solid var(--line);
+        background: rgba(255, 255, 255, 0.03);
+        color: var(--muted);
+        text-transform: lowercase;
+      }
+
+      .mock__line {
+        height: 10px;
+        flex: 1;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.06);
+      }
+
+      .mock__divider {
+        height: 1px;
+        background: var(--line);
+        margin: 14px 0;
+      }
+
+      .mock__block {
+        height: 16px;
+        border-radius: 10px;
+        background: rgba(255, 255, 255, 0.07);
+        margin-bottom: 10px;
+      }
+
+      .mock__block.small {
+        height: 12px;
+        width: 70%;
+      }
+
+      .mock__btn {
+        height: 38px;
+        border-radius: 999px;
+        background: linear-gradient(135deg, rgba(179, 13, 47, 0.9), rgba(255, 43, 88, 0.9));
+      }
+
+      .glow {
+        position: absolute;
+        inset: -80px -50px auto auto;
+        width: 300px;
+        height: 300px;
+        background: radial-gradient(circle, rgba(255, 43, 88, 0.28), transparent 65%);
+        filter: blur(10px);
+        pointer-events: none;
+      }
+
+      .section {
+        padding: 54px 0;
+      }
+
+      .section__inner {
+        max-width: var(--max);
+        margin: 0 auto;
+        padding: 0 18px;
+      }
+
+      h2 {
+        margin: 0 0 18px;
+        font-size: 28px;
+        letter-spacing: -0.3px;
+        text-transform: lowercase;
+      }
+
+      h3 {
+        margin: 0 0 10px;
+        font-size: 18px;
+        letter-spacing: -0.2px;
+        text-transform: lowercase;
+      }
+
+      .grid3 {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 14px;
+        margin-top: 16px;
+      }
+
+      .box {
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        background: rgba(255, 255, 255, 0.03);
+        padding: 16px;
+      }
+
+      .box__title {
+        font-weight: 900;
+        letter-spacing: 0.1px;
+        text-transform: lowercase;
+        margin-bottom: 8px;
+      }
+
+      .box p {
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.55;
+        font-size: 14px;
+      }
+
+      .split {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 14px;
+        margin-top: 16px;
+      }
+
+      ul {
+        margin: 10px 0 14px;
+        padding-left: 18px;
+        color: var(--muted);
+        line-height: 1.6;
+        font-size: 14px;
+      }
+
+      .faq {
+        display: grid;
+        gap: 10px;
+        margin-top: 12px;
+      }
+
+      details {
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        background: rgba(255, 255, 255, 0.03);
+        padding: 12px 14px;
+      }
+
+      summary {
+        cursor: pointer;
+        font-weight: 800;
+        text-transform: lowercase;
+        outline: none;
+      }
+
+      details p {
+        margin: 10px 0 0;
+        color: var(--muted);
+        line-height: 1.6;
+        font-size: 14px;
+      }
+
+      .final {
+        padding: 54px 0 64px;
+        border-top: 1px solid var(--line);
+        background: rgba(255, 255, 255, 0.02);
+      }
+
+      .final__inner {
+        max-width: var(--max);
+        margin: 0 auto;
+        padding: 0 18px;
+        text-align: center;
+      }
+
+      .final__inner p {
+        color: var(--muted);
+        margin: 8px auto 16px;
+        max-width: 62ch;
+        line-height: 1.6;
+      }
+
+      .tiny {
+        margin-top: 16px;
+        color: rgba(255, 255, 255, 0.45);
+        font-size: 12px;
+      }
+
+      /* modal */
+      .modal {
+        position: fixed;
+        inset: 0;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        padding: 18px;
+        background: rgba(0, 0, 0, 0.65);
+        backdrop-filter: blur(8px);
+        z-index: 200;
+      }
+
+      .modal.is-open {
+        display: flex;
+      }
+
+      .modal__panel {
+        width: min(560px, 100%);
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        border-radius: calc(var(--radius) + 10px);
+        background: rgba(7, 7, 10, 0.82);
+        box-shadow: var(--shadow);
+        overflow: hidden;
+      }
+
+      .modal__head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 14px 16px;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .modal__title {
+        font-weight: 900;
+        letter-spacing: 0.1px;
+        text-transform: lowercase;
+      }
+
+      .modal__close {
+        width: 36px;
+        height: 36px;
+        border-radius: 999px;
+        border: 1px solid var(--line);
+        background: rgba(255, 255, 255, 0.03);
+        color: var(--text);
+        cursor: pointer;
+        font-size: 18px;
+        line-height: 0;
+      }
+
+      .modal__body {
+        padding: 16px;
+      }
+
+      .field {
+        display: grid;
+        gap: 6px;
+        margin-top: 12px;
+      }
+
+      .label {
+        color: var(--muted);
+        font-size: 13px;
+        text-transform: lowercase;
+      }
+
+      .input,
+      .select {
+        height: 44px;
+        border-radius: 12px;
+        border: 1px solid var(--line);
+        background: rgba(255, 255, 255, 0.03);
+        color: var(--text);
+        padding: 0 12px;
+        outline: none;
+      }
+
+      .input:focus,
+      .select:focus {
+        border-color: rgba(255, 255, 255, 0.22);
+      }
+
+      .modal__footer {
+        display: flex;
+        gap: 10px;
+        justify-content: flex-end;
+        padding: 14px 16px;
+        border-top: 1px solid var(--line);
+        background: rgba(255, 255, 255, 0.02);
+      }
+
+      .note {
+        color: rgba(255, 255, 255, 0.55);
+        font-size: 12px;
+        line-height: 1.5;
+        margin-top: 10px;
+      }
+
+      /* responsive */
+      @media (min-width: 900px) {
+        .nav__links {
+          display: flex;
+        }
+      }
+
+      @media (max-width: 920px) {
+        .hero__inner {
+          grid-template-columns: 1fr;
+        }
+        .hero__panel {
+          min-height: 320px;
+        }
+        h1 {
+          font-size: 38px;
+        }
+      }
+
+      @media (max-width: 720px) {
+        .trust {
+          grid-template-columns: 1fr;
+        }
+        .grid3 {
+          grid-template-columns: 1fr;
+        }
+        .split {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <header class="nav">
+      <div class="nav__inner">
+        <div class="brand">
+          <div class="brand__mark" aria-hidden="true"></div>
+          <div class="brand__name">ravelle</div>
+        </div>
+
+        <nav class="nav__links" aria-label="primary">
+          <a href="#how">how it works</a>
+          <a href="#safety">safety</a>
+          <a href="#faq">faq</a>
+        </nav>
+
+        <div class="nav__actions">
+          <button class="btn btn--ghost" id="btnSignIn">sign in</button>
+          <button class="btn btn--primary" id="btnJoin">join waitlist</button>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="hero__inner">
+          <div class="hero__content">
+            <div class="pill">members only • verified access • discreet</div>
+            <h1>the private marketplace for independent companions and verified clients</h1>
+            <p class="sub">
+              ravelle makes booking simple, professional, and safer — with identity checks, clear boundaries, and
+              messaging built for discretion.
+            </p>
+
+            <div class="cta">
+              <button class="btn btn--primary btn--lg" id="btnJoin2">join waitlist</button>
+              <a class="btn btn--ghost btn--lg" href="#how">explore how it works</a>
+            </div>
+
+            <div class="trust">
+              <div class="trust__item">
+                <div class="trust__kpi">verified</div>
+                <div class="trust__label">client access</div>
+              </div>
+              <div class="trust__item">
+                <div class="trust__kpi">private</div>
+                <div class="trust__label">profiles & messaging</div>
+              </div>
+              <div class="trust__item">
+                <div class="trust__kpi">control</div>
+                <div class="trust__label">boundaries & rules</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="hero__panel" aria-hidden="true">
+            <div class="card">
+              <div class="card__top">
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+              </div>
+              <div class="card__body">
+                <div class="mock__title">ravelle access</div>
+                <div class="mock__row">
+                  <div class="mock__badge">client</div>
+                  <div class="mock__line"></div>
+                </div>
+                <div class="mock__row">
+                  <div class="mock__badge">companion</div>
+                  <div class="mock__line"></div>
+                </div>
+                <div class="mock__divider"></div>
+                <div class="mock__block"></div>
+                <div class="mock__block small"></div>
+                <div class="mock__block small"></div>
+                <div class="mock__divider"></div>
+                <div class="mock__btn"></div>
+              </div>
+            </div>
+            <div class="glow"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="how">
+        <div class="section__inner">
+          <h2>how it works</h2>
+
+          <div class="grid3">
+            <div class="box">
+              <div class="box__title">1. apply</div>
+              <p>create a profile and choose your role. companions set boundaries. clients verify identity.</p>
+            </div>
+            <div class="box">
+              <div class="box__title">2. match</div>
+              <p>browse privately, request availability, and message with built-in discretion tools.</p>
+            </div>
+            <div class="box">
+              <div class="box__title">3. book</div>
+              <p>confirm expectations clearly. keep everything organized in one place — no chaos, no guessing.</p>
+            </div>
+          </div>
+
+          <div class="split">
+            <div class="box">
+              <h3>for companions</h3>
+              <ul>
+                <li>boundaries & rules upfront</li>
+                <li>screening-friendly flow</li>
+                <li>private profile controls</li>
+                <li>reporting & block tools</li>
+              </ul>
+              <button class="btn btn--ghost" id="btnCompanion">I’m a companion</button>
+            </div>
+
+            <div class="box">
+              <h3>for clients</h3>
+              <ul>
+                <li>verified access</li>
+                <li>discreet communication</li>
+                <li>clear booking expectations</li>
+                <li>fast scheduling</li>
+              </ul>
+              <button class="btn btn--ghost" id="btnClient">I’m a client</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="safety">
+        <div class="section__inner">
+          <h2>safety by design</h2>
+          <div class="grid3">
+            <div class="box">
+              <div class="box__title">verification layers
+::contentReference[oaicite:0]{index=0}
